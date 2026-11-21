@@ -22,7 +22,7 @@ The interface of the program is in Turkish.
 5) Çıkış
 Seçimin: 2
 1. [x] Ödevi bitir
-2. [ ] Git öğren
+2. [ ] Markete git
 ```
 
 ## Build and run
