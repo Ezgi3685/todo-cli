@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -44,6 +45,50 @@ public:
             std::cout << t.id << ". ["
                       << (t.done ? "x" : " ") << "] "
                       << t.title << std::endl;
+        }
+    }
+
+    void save(const std::string& filename) const {
+        std::ofstream out(filename);
+        if (!out) {
+            std::cout << "Dosya yazılamadı: " << filename << std::endl;
+            return;
+        }
+        for (const Task& t : tasks) {
+            out << t.id << '|' << (t.done ? 1 : 0) << '|'
+                << t.title << '\n';
+        }
+    }
+
+    void load(const std::string& filename) {
+        std::ifstream in(filename);
+        if (!in) {
+            return;  // dosya henüz yok, sorun değil
+        }
+
+        tasks.clear();
+        nextId = 1;
+
+        std::string line;
+        while (std::getline(in, line)) {
+            size_t p1 = line.find('|');
+            size_t p2 = line.find('|', p1 + 1);
+            if (p1 == std::string::npos || p2 == std::string::npos) {
+                continue;  // bozuk satırı atla
+            }
+
+            try {
+                Task t;
+                t.id = std::stoi(line.substr(0, p1));
+                t.done = (line.substr(p1 + 1, p2 - p1 - 1) == "1");
+                t.title = line.substr(p2 + 1);
+                tasks.push_back(t);
+                if (t.id >= nextId) {
+                    nextId = t.id + 1;
+                }
+            } catch (...) {
+                continue;  // numara okunamadıysa satırı atla
+            }
         }
     }
 

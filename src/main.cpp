@@ -3,22 +3,14 @@
 
 int main() {
     TaskManager manager;
+    manager.load("tasks.txt");
 
-    manager.add("Ödevi bitir");
-    manager.add("Git öğren");
-    manager.add("Markete git");
-
-    manager.markDone(2);
+    std::cout << "--- Açılışta yüklenen görevler ---" << std::endl;
     manager.list();
 
-    std::cout << "--- 1 numaralı görev siliniyor ---" << std::endl;
-    manager.remove(1);
-    manager.list();
+    manager.add("Yeni görev");
+    manager.save("tasks.txt");
 
-    std::cout << "--- olmayan görev siliniyor ---" << std::endl;
-    if (!manager.remove(99)) {
-        std::cout << "99 numaralı görev bulunamadı." << std::endl;
-    }
-
+    std::cout << "--- Kaydedildi ---" << std::endl;
     return 0;
 }
