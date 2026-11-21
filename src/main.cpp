@@ -1,12 +1,12 @@
-#include <iostream>
-#include "task.h"
+#include "task_manager.h"
 
 int main() {
-    Task t;
-    t.id = 1;
-    t.title = "Ödevi bitir";
+    TaskManager manager;
 
-    std::cout << t.id << " - " << t.title
-              << " - bitti mi: " << t.done << std::endl;
+    manager.add("Ödevi bitir");
+    manager.add("Git öğren");
+    manager.add("Markete git");
+
+    manager.list();
     return 0;
 }
